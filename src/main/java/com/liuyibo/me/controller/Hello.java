@@ -1,42 +1,42 @@
 package com.liuyibo.me.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.liuyibo.me.component.RedisClient;
+import com.liuyibo.me.component.Response;
+import com.liuyibo.me.dal.dao.AccountDao;
+import com.liuyibo.me.dal.po.AccountPo;
+import com.liuyibo.me.service.WechatClientService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.annotation.Resource;
 
+@Slf4j
 @RestController
-@RequestMapping("/")
 public class Hello {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @Resource
+    private AccountDao accountDao;
 
-    @GetMapping("/hello")
-    public JSONObject hello(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("msg", "hello world! mother fucker...");
-        return jsonObject;
-    }
+    @Resource
+    RedisClient redisClient;
 
-    @GetMapping("/jdbc")
-    public JSONObject jdbcTest(){
-        JSONObject jsonObject = new JSONObject();
-        int count = jdbcTemplate.queryForObject("select count(*) from article", Integer.class);
-        jsonObject.put("msg", "article count");
-        jsonObject.put("value", count);
-        List articles = jdbcTemplate.query("select title, author from article", (rs, rowNum) -> {
-            Article article = new Article();
-            article.setTitle(rs.getString("title"));
-            article.setAuthor(rs.getString("author"));
-            return article;
-        });
-        jsonObject.put("content", articles);
-        return jsonObject;
+    @Resource
+    private WechatClientService wechatClientService;
+
+    @Value("${test}")
+    private String test;
+
+    @RequestMapping("/hello")
+    public Response hello() {
+//        throw new BizException("ss");
+        log.debug("this is debug");
+        log.info("this is info");
+        log.warn("this is warn");
+        log.error("this is error");
+//        wechatClientService.sendText2Chatroom("test", "6596099585@chatroom");
+        return Response.successResponse(new AccountPo());
     }
 
 }

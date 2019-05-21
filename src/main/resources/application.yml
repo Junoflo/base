@@ -1,6 +1,12 @@
+server:
+  port: 8091
+
 spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/site?useUnicode=true&characterEncoding=utf8&useSSL=true
-    username: root
-    password: 1234
+  profiles:
+    active: rd
+
+#logging:
+#  config: classpath:log4j2.yml
+
+test:
+  1111111

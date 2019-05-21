@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/site?useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://172.21.139.13:3307/um?serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+    username: chaikuprod
+    password: testchaiku
+
+  redis:
+    host: 172.21.141.33
+    port: 19001
+    password: kc9wj2oflaq
+    database: 10
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+      timeout: 0
+dubbo:
+  application:
+    name: base
+#    logger: slf4j
+  registry:
+    protocol: zookeeper
+    address: 172.21.134.7:2005
+  scan: com.liuyibo.me.service
+#    basePackages: com.liuyibo.me.service
+

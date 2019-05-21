@@ -1,0 +1,52 @@
+Configutation:
+  packages: com.liuyibo.me.component
+  status: WARN
+  monitorInterval: 30
+
+  Properties:
+    Property:
+      name: log-path
+      value: "logs"
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{requestId}] %logger{0}:%line - %msg%n"
+
+    WechatLogAppender:
+      name: WechatLogAppender
+#      PatternLayout:
+#        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{requestId}] %logger{0}:%line - %msg%n"
+
+    File:
+      name: File_Appender
+      fileName: ${log-path}/base.log
+      PatternLayout:
+        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{requestId}] %logger{0}:%line - %msg%n"
+
+    RollingFile:
+      name: RollingFile_Appender
+      fileName: ${log-path}/rollingfile.log
+      filePattern: "logs/archive/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz"
+      PatternLayout:
+        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{requestId}] %logger{0}:%line - %msg%n"
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 1 KB
+      DefaultRollOverStrategy:
+        max: 30
+
+  Loggers:
+      Root:
+        level: info
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: WechatLogAppender
+
+#      Logger:
+#        name: com.liuyibo.me
+#          level: debug
+#          AppenderRef:
+#            ref: File_Appender
